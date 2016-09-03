@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
@@ -36,13 +38,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ImageView buttonView = (ImageView) findViewById(R.id.picture);
+        buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA)
                             != PackageManager.PERMISSION_GRANTED) {
@@ -55,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     selectImage();
                 }
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
     }
@@ -113,20 +121,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void delegateAction(int vibrant) {
-        switch (vibrant){
-            case -13618952 : // C1
-                Log.d("Color", "Circle blue");
-                break;
-            case -485376 : // C2
-                Log.d("Color", "Circle orange");
-                break;
+        int color = 0;
+
+        int r = (vibrant >> 16) & 0xFF;
+        int g = (vibrant >> 8) & 0xFF;
+        int b = (vibrant >> 0) & 0xFF;
+
+        Log.d("RGB", r + "," + g + "," + b);
+
+//        switch (vibrant){
+//            case -13618952 : // C1
+//                Log.d("Color", "Circle blue");
+//                color = Pool.Color.BURRITO;
+//                break;
+//            case -485376 : // C2
+//                Log.d("Color", "Circle orange");
+//                break;
+//            case -14116792 : // C3
+//                Log.d("Color", "Circle green");
+//                color = Pool.Color.POBLANO;
+//                break;
+//        }
+
+
+        if(r == 0 && g < 255 && b == 0){ // Verde
+            color = Pool.Color.POBLANO;
+        }else if(r == 0 && g == 0 && b < 255){ // Azul
+            color = Pool.Color.BURRITO;
         }
+
+        if(color == 0){
+            Toast.makeText(MainActivity.this, R.string.no_foods_with_this_color, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("color", color);
+        startActivity(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
