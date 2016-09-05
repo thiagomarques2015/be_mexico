@@ -1,5 +1,6 @@
 package br.com.bemexico;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,7 +13,7 @@ public class Pool {
         public static final int POBLANO = 2;
     }
 
-    public static HashMap<Integer, Detail> foods;
+    private static HashMap<Integer, Detail> foods;
 
     static  {
         foods = new HashMap<>();
@@ -31,7 +32,7 @@ public class Pool {
         burrito.addList2("Salsa");
         burrito.addList2("Sour cream (in the U.S.)");
         foods.put(Color.BURRITO, burrito);
-        // Poublato
+        // Poblano
         Detail poblano = new Detail();
         poblano.setTitle("Poblano");
         poblano.setImage(R.drawable.poblano);
@@ -42,5 +43,13 @@ public class Pool {
 
     public static Detail get(int color){
         return foods.get(color);
+    }
+
+    public static HashMap<Integer, Detail> getMap(){
+        return foods;
+    }
+
+    public static ArrayList<Detail> toArrayList(){
+        return new ArrayList<Detail>(foods.values());
     }
 }

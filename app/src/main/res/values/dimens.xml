@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_horizontal_text_item_list">10dp</dimen>
+    <dimen name="card_padding">60dp</dimen>
 </resources>
