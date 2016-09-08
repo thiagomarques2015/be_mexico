@@ -1,15 +1,12 @@
 package br.com.bemexico;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -21,7 +18,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +27,7 @@ import com.nguyenhoanglam.imagepicker.model.Image;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, CardPagerAdapter.ClickListener {
 
     private static final int REQUEST_CODE_PICKER = 1;
     private static final int CAMERA_PERMISSION = 1;
@@ -71,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mViewPager.setOffscreenPageLimit(3);
         // Set Scalling enable
         onCheckedChanged(null, true);
+        // Enable click
+        mCardAdapter.setOnItemClick(this);
     }
 
     @Override
@@ -141,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         TextView colorV = (TextView) findViewById(R.id.color);
                         colorV.setBackgroundColor(vibrant);
 
-                        Log.d("Color", vibrant + "");
+                        Log.d("Item", vibrant + "");
 
                         delegateAction(vibrant);
                     }
@@ -162,23 +160,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        switch (vibrant){
 //            case -13618952 : // C1
-//                Log.d("Color", "Circle blue");
-//                color = Pool.Color.BURRITO;
+//                Log.d("Item", "Circle blue");
+//                color = Pool.Item.BURRITO;
 //                break;
 //            case -485376 : // C2
-//                Log.d("Color", "Circle orange");
+//                Log.d("Item", "Circle orange");
 //                break;
 //            case -14116792 : // C3
-//                Log.d("Color", "Circle green");
-//                color = Pool.Color.POBLANO;
+//                Log.d("Item", "Circle green");
+//                color = Pool.Item.POBLANO;
 //                break;
 //        }
 
 
         if(r == 0 && g < 255 && b == 0){ // Verde
-            color = Pool.Color.POBLANO;
+            color = Pool.Item.POBLANO;
         }else if(r == 0 && g == 0 && b < 255){ // Azul
-            color = Pool.Color.BURRITO;
+            color = Pool.Item.BURRITO;
         }
 
         if(color == 0){
@@ -211,5 +209,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Detail item = Pool.toArrayList().get(position);
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("type", item.getType());
+        startActivity(intent);
     }
 }

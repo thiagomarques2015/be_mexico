@@ -12,6 +12,9 @@ public class Detail {
     private String titleList1, titleList2;
     private List<String> list1;
     private List<String> list2;
+    private String description;
+    private int type;
+    private int icon;
 
     public Detail() {
         list1 = new ArrayList<>();
@@ -80,5 +83,29 @@ public class Detail {
 
     public boolean hasList2() {
         return list2.size() > 0;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public int getIcon() {
+        return icon;
     }
 }

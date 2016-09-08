@@ -19,13 +19,33 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Title"
-                android:layout_gravity="left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/title"
-                android:text="Card title" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_gravity="left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/title"
+                    android:gravity="center_vertical"
+                    android:text="Card title Card title Card title"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/icon"
+                    android:layout_toStartOf="@+id/icon" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:src="@drawable/food"
+                    android:id="@+id/icon"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -43,15 +63,6 @@
                 android:id="@+id/enter"
                 android:text="See more" />
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/groceries" />
 
     </FrameLayout>
 
